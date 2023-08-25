@@ -13,4 +13,9 @@ class Ingredient extends Model
         'name',
         'price'
     ];
+
+    public function pizzas()
+    {
+        return $this->belongsToMany(Pizza::class, 'pizza_ingredient');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Ingredient;
 use App\Models\Pizza;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -45,5 +46,28 @@ class PizzaManagementTest extends TestCase
 
         $response->assertSessionHasErrors('name');
         $this->assertCount(1, Pizza::all());
+    }
+
+    /** @test */
+    public function can_add_ingredient_to_pizza()
+    {
+        $this->post('/pizzas', [
+            'name' => 'Hawaiian'
+        ]);
+
+        $this->post('/ingredients', [
+            'name' => 'Salt',
+            'price' => 1.99
+        ]);
+
+        $pizza = Pizza::first();
+        $ingredient = Ingredient::first();
+        $response = $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+
+        $response->assertOk();
+
+        $this->assertTrue($pizza->ingredients->contains($ingredient));
+        $this->assertEquals('Salt', $pizza->ingredients->first()->name);
+        $this->assertCount(1, $pizza->ingredients);
     }
 }
