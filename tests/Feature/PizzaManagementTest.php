@@ -21,6 +21,7 @@ class PizzaManagementTest extends TestCase
 
         $response->assertRedirect('/pizzas');
         $this->assertCount(1, Pizza::all());
+        $this->assertEquals('Hawaiian', Pizza::first()->name);
     }
 
     /** @test */
