@@ -14,7 +14,6 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function can_add_new_pizza_to_database(): void
     {
-        $this->withoutExceptionHandling();
         $response = $this->post('/pizzas', [
             'name' => 'Hawaiian'
         ]);
