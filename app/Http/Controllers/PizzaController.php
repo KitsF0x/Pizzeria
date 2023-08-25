@@ -9,7 +9,10 @@ class PizzaController extends Controller
 {
     public function store(Request $request)
     {
-        Pizza::create($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required'
+        ]);
+        Pizza::create($validatedData);
         return redirect('/pizzas');
     }
 }

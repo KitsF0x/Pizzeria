@@ -22,4 +22,14 @@ class PizzaManagementTest extends TestCase
         $response->assertRedirect('/pizzas');
         $this->assertCount(1, Pizza::all());
     }
+
+    /** @test */
+    public function cannot_add_new_pizza_without_name_to_database(): void
+    {
+        $response = $this->post('/pizzas', [
+            'name' => ''
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
 }
