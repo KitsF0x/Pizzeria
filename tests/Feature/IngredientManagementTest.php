@@ -15,7 +15,8 @@ class IngredientManagementTest extends TestCase
     public function can_add_new_ingredient_to_database(): void
     {
         $response = $this->post('ingredients/', [
-            'name' => 'Salt'
+            'name' => 'Salt',
+            'price' => 1.99
         ]);
 
         $response->assertRedirect('ingredients/');
@@ -31,5 +32,15 @@ class IngredientManagementTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function cannot_add_new_ingredient_without_price_to_database(): void
+    {
+        $response = $this->post('/ingredients', [
+            'price' => ''
+        ]);
+
+        $response->assertSessionHasErrors('price');
     }
 }

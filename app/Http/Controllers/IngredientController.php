@@ -10,7 +10,8 @@ class IngredientController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'price' => 'required'
         ]);
         Ingredient::create($validatedData);
         return redirect('ingredients/');
