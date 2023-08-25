@@ -10,9 +10,12 @@ class PizzaIngredientController extends Controller
 {
     public function attach(Request $request, Pizza $pizza, Ingredient $ingredient)
     {
-        $pizza->ingredients()->attach($ingredient->id);
-
-        return response()->json(['message' => 'Ingredient attached to pizza.']);
+        if (!$pizza->ingredients->contains($ingredient->id)) {
+            $pizza->ingredients()->attach($ingredient->id);
+            return response()->json(['message' => 'Ingredient attached to pizza.']);
+        } else {
+            return response()->json(['message' => 'Ingredient is already attached to pizza.']);
+        }
     }
 
     public function detach(Request $request, Pizza $pizza, Ingredient $ingredient)

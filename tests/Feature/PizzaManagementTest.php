@@ -72,6 +72,26 @@ class PizzaManagementTest extends TestCase
     }
 
     /** @test */
+    public function cannot_add_ingredient_to_pizza_twice()
+    {
+        $this->post('/pizzas', [
+            'name' => 'Hawaiian'
+        ]);
+
+        $this->post('/ingredients', [
+            'name' => 'Salt',
+            'price' => 1.99
+        ]);
+
+        $pizza = Pizza::first();
+        $ingredient = Ingredient::first();
+        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+
+        $this->assertCount(1, $pizza->ingredients);
+    }
+
+    /** @test */
     public function can_remove_ingredient_from_pizza()
     {
         $this->post('/pizzas', [
