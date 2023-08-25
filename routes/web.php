@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PizzaController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/pizzas', [PizzaController::class, 'store']);
+
+Route::post('/ingredients', [IngredientController::class, 'store']);
