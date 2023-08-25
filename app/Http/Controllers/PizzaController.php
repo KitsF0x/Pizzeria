@@ -13,6 +13,5 @@ class PizzaController extends Controller
             'name' => 'required|unique:App\Models\Pizza,name'
         ]);
         Pizza::create($validatedData);
-        return redirect('/pizzas');
     }
 }

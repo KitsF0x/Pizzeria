@@ -14,6 +14,5 @@ class IngredientController extends Controller
             'price' => 'required'
         ]);
         Ingredient::create($validatedData);
-        return redirect('ingredients/');
     }
 }

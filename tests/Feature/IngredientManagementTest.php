@@ -19,7 +19,7 @@ class IngredientManagementTest extends TestCase
             'price' => 1.99
         ]);
 
-        $response->assertRedirect('ingredients/');
+        $response->assertOk();
         $this->assertCount(1, Ingredient::all());
         $this->assertEquals('Salt', Ingredient::first()->name);
         $this->assertEquals(1.99, Ingredient::first()->price);
