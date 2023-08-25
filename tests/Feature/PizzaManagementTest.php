@@ -32,4 +32,18 @@ class PizzaManagementTest extends TestCase
 
         $response->assertSessionHasErrors('name');
     }
+
+    /** @test */
+    public function cannot_add_pizza_with_already_used_name(): void
+    {
+        $this->post('/pizzas', [
+            'name' => 'Hawaiian'
+        ]);
+        $response = $this->post('/pizzas', [
+            'name' => 'Hawaiian'
+        ]);
+
+        $response->assertSessionHasErrors('name');
+        $this->assertCount(1, Pizza::all());
+    }
 }

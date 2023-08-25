@@ -10,7 +10,7 @@ class PizzaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:App\Models\Pizza,name'
         ]);
         Pizza::create($validatedData);
         return redirect('/pizzas');
