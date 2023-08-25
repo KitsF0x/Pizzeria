@@ -21,3 +21,4 @@ Route::post('/pizzas', [PizzaController::class, 'store']);
 Route::post('/ingredients', [IngredientController::class, 'store']);
 
 Route::post('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach']);
+Route::delete('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'detach']);

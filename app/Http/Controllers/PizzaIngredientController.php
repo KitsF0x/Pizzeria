@@ -14,4 +14,10 @@ class PizzaIngredientController extends Controller
 
         return response()->json(['message' => 'Ingredient attached to pizza.']);
     }
+
+    public function detach(Request $request, Pizza $pizza, Ingredient $ingredient)
+    {
+        $pizza->ingredients()->detach($ingredient->id);
+        return response()->json(['message' => 'Ingredient detached from pizza.']);
+    }
 }
