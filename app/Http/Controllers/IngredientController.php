@@ -9,7 +9,10 @@ class IngredientController extends Controller
 {
     public function store(Request $request)
     {
-        Ingredient::create($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required'
+        ]);
+        Ingredient::create($validatedData);
         return redirect('ingredients/');
     }
 }

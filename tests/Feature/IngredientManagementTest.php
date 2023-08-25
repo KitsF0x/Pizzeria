@@ -22,4 +22,14 @@ class IngredientManagementTest extends TestCase
         $this->assertCount(1, Ingredient::all());
         $this->assertEquals('Salt', Ingredient::first()->name);
     }
+
+    /** @test */
+    public function cannot_add_new_ingredient_without_name_to_database(): void
+    {
+        $response = $this->post('/ingredients', [
+            'name' => ''
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
 }
