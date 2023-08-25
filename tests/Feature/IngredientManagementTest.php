@@ -22,6 +22,7 @@ class IngredientManagementTest extends TestCase
         $response->assertRedirect('ingredients/');
         $this->assertCount(1, Ingredient::all());
         $this->assertEquals('Salt', Ingredient::first()->name);
+        $this->assertEquals(1.99, Ingredient::first()->price);
     }
 
     /** @test */
