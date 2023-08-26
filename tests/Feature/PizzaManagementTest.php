@@ -47,4 +47,19 @@ class PizzaManagementTest extends TestCase
         $response->assertSessionHasErrors('name');
         $this->assertCount(1, Pizza::all());
     }
+
+    /** @test */
+    public function can_delete_pizza_from_database(): void
+    {
+        $this->withoutExceptionHandling();
+        $this->post('/pizzas', [
+            'name' => 'Hawaiian'
+        ]);
+
+        $pizza = Pizza::first();
+
+        $response = $this->delete('/pizzas/' . $pizza->id);
+        $response->assertOk();
+        $this->assertCount(0, Pizza::all());
+    }
 }

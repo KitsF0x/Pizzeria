@@ -14,4 +14,9 @@ class PizzaController extends Controller
         ]);
         Pizza::create($validatedData);
     }
+
+    public function destroy(Request $request, Pizza $pizza)
+    {
+        $pizza->delete();
+    }
 }

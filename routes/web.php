@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/pizzas', [PizzaController::class, 'store']);
+Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy']);
 
 Route::post('/ingredients', [IngredientController::class, 'store']);
 
