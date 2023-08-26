@@ -25,3 +25,6 @@ Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destro
 
 Route::post('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach']);
 Route::delete('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'detach']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
