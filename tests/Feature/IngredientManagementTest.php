@@ -44,4 +44,20 @@ class IngredientManagementTest extends TestCase
 
         $response->assertSessionHasErrors('price');
     }
+
+    /** @test */
+    public function can_delete_ingredient_from_database(): void
+    {
+        $this->withoutExceptionHandling();
+        $this->post('/ingredients', [
+            'name' => 'Salt',
+            'price' => 1.99
+        ]);
+
+        $ingredient = Ingredient::first();
+
+        $response = $this->delete('/ingredients/' . $ingredient->id);
+        $response->assertOk();
+        $this->assertCount(0, Ingredient::all());
+    }
 }
