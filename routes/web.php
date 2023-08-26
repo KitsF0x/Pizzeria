@@ -20,7 +20,7 @@ Route::post('/pizzas', [PizzaController::class, 'store']);
 Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy']);
 
 Route::post('/ingredients', [IngredientController::class, 'store']);
-Route::delete('/ingredients/{pizza}', [IngredientController::class, 'destroy']);
+Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy']);
 
 
 Route::post('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach']);

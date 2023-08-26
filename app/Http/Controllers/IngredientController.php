@@ -15,8 +15,8 @@ class IngredientController extends Controller
         ]);
         Ingredient::create($validatedData);
     }
-    public function destroy(Request $request, Ingredient $pizza)
+    public function destroy(Request $request, Ingredient $ingredient)
     {
-        $pizza->delete();
+        $ingredient->delete();
     }
 }
