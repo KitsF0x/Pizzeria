@@ -51,7 +51,6 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function can_delete_pizza_from_database(): void
     {
-        $this->withoutExceptionHandling();
         $this->post('/pizzas', [
             'name' => 'Hawaiian'
         ]);

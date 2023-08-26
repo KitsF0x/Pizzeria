@@ -48,7 +48,6 @@ class IngredientManagementTest extends TestCase
     /** @test */
     public function can_delete_ingredient_from_database(): void
     {
-        $this->withoutExceptionHandling();
         $this->post('/ingredients', [
             'name' => 'Salt',
             'price' => 1.99
