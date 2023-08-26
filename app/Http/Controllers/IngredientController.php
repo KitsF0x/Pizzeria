@@ -17,6 +17,10 @@ class IngredientController extends Controller
     }
     public function destroy(Request $request, Ingredient $ingredient)
     {
+        $pizzas = $ingredient->pizzas()->get();
+        foreach ($pizzas as $pizza) {
+            $pizza->ingredients()->detach($ingredient->id);
+        }
         $ingredient->delete();
     }
 }
