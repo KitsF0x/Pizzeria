@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\Ingredient;
 use App\Models\Pizza;
+use Database\Seeders\IngredientsSeeder;
+use Database\Seeders\PizzasSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -78,23 +80,12 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function can_delete_records_with_id_of_deleted_ingredient(): void
     {
-        // Create 2 ingredients 
-        $this->post('/ingredients', [
-            'name' => 'Salt',
-            'price' => 1.99
-        ]);
-        $this->post('/ingredients', [
-            'name' => 'Olives',
-            'price' => 5.99
-        ]);
-
-        // Create 1 pizza
-        $this->post('/pizzas', [
-            'name' => 'Hawaiian'
-        ]);
+        // Seed database 
+        $this->seed(IngredientsSeeder::class);
+        $this->seed(PizzasSeeder::class);
 
         // Get models into variables
-        $pizza = Pizza::first();
+        $pizza = Pizza::where('id', 1)->first();
         $ingredientSalt = Ingredient::where('id', 1)->first();
         $ingredientOlives = Ingredient::where('id', 2)->first();
 
