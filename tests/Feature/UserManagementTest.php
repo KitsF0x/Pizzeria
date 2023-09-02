@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -27,14 +28,7 @@ class UserManagementTest extends TestCase
     /** @test */
     public function is_user_default_role_number_is_zero(): void
     {
-        $this->withoutExceptionHandling();
-        $this->post('register/', [
-            'name' => 'testUsername',
-            'email' => 'test@gmail.com',
-            'password' => 'test1234abcd',
-            'password_confirmation' => 'test1234abcd'
-        ]);
-
+        $this->seed(UserSeeder::class);
         $this->assertEquals(0, User::first()->role_number);
     }
 }
