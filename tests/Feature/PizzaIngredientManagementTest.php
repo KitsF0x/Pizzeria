@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Models\Pizza;
 use Database\Seeders\IngredientsSeeder;
 use Database\Seeders\PizzasSeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -17,6 +18,7 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function can_add_ingredient_to_pizza()
     {
+        $this->seed(UserSeeder::class);
         $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
@@ -39,6 +41,7 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function cannot_add_ingredient_to_pizza_twice()
     {
+        $this->seed(UserSeeder::class);
         $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
@@ -59,6 +62,7 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function can_remove_ingredient_from_pizza()
     {
+        $this->seed(UserSeeder::class);
         $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Ingredient;
 use App\Models\Pizza;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,7 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function can_add_new_pizza_to_database(): void
     {
+        $this->seed(UserSeeder::class);
         $response = $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
@@ -27,6 +29,7 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function cannot_add_new_pizza_without_name_to_database(): void
     {
+        $this->seed(UserSeeder::class);
         $response = $this->post(route('pizzas.store'), [
             'name' => ''
         ]);
@@ -37,6 +40,7 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function cannot_add_pizza_with_already_used_name(): void
     {
+        $this->seed(UserSeeder::class);
         $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
@@ -51,6 +55,7 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function can_delete_pizza_from_database(): void
     {
+        $this->seed(UserSeeder::class);
         $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
@@ -59,6 +64,17 @@ class PizzaManagementTest extends TestCase
 
         $response = $this->delete(route('pizzas.destroy', $pizza->id));
         $response->assertOk();
+        $this->assertCount(0, Pizza::all());
+    }
+
+    /** @test */
+    public function guest_cannot_create_and_delete_pizzas(): void
+    {
+        $response = $this->post(route('pizzas.store', [
+            'name' => 'Hawaiian'
+        ]));
+
+        $response->assertUnauthorized();
         $this->assertCount(0, Pizza::all());
     }
 }
