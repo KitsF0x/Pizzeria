@@ -17,18 +17,18 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function can_add_ingredient_to_pizza()
     {
-        $this->post('/pizzas', [
+        $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
 
-        $this->post('/ingredients', [
+        $this->post(route('ingredients.store'), [
             'name' => 'Salt',
             'price' => 1.99
         ]);
 
         $pizza = Pizza::first();
         $ingredient = Ingredient::first();
-        $response = $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+        $response = $this->post(route('pizza_ingredients.attach', [$pizza->id, $ingredient->id]));
 
         $response->assertOk();
 
@@ -39,19 +39,19 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function cannot_add_ingredient_to_pizza_twice()
     {
-        $this->post('/pizzas', [
+        $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
 
-        $this->post('/ingredients', [
+        $this->post(route('ingredients.store'), [
             'name' => 'Salt',
             'price' => 1.99
         ]);
 
         $pizza = Pizza::first();
         $ingredient = Ingredient::first();
-        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
-        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+        $this->post(route('pizza_ingredients.attach', [$pizza->id, $ingredient->id]));
+        $this->post(route('pizza_ingredients.attach', [$pizza->id, $ingredient->id]));
 
         $this->assertCount(1, $pizza->ingredients);
     }
@@ -59,20 +59,20 @@ class PizzaIngredientManagementTest extends TestCase
     /** @test */
     public function can_remove_ingredient_from_pizza()
     {
-        $this->post('/pizzas', [
+        $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
 
-        $this->post('/ingredients', [
+        $this->post(route('ingredients.store'), [
             'name' => 'Salt',
             'price' => 1.99
         ]);
 
         $pizza = Pizza::first();
         $ingredient = Ingredient::first();
-        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+        $this->post(route('pizza_ingredients.attach', [$pizza->id, $ingredient->id]));
 
-        $response = $this->delete('pizza_ingredient/' . $pizza->id . '/' . $ingredient->id);
+        $response = $this->delete(route('pizza_ingredients.detach', [$pizza->id, $ingredient->id]));
         $response->assertOk();
         $this->assertCount(0, $pizza->ingredients);
     }
@@ -94,14 +94,14 @@ class PizzaIngredientManagementTest extends TestCase
         $this->assertEquals('Olives', $ingredientOlives->name);
 
         // Connect pizza with ingredients
-        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredientSalt->id);
-        $this->post('pizza_ingredient/' . $pizza->id . '/' . $ingredientOlives->id);
+        $this->post(route('pizza_ingredients.attach', [$pizza->id, $ingredientSalt->id]));
+        $this->post(route('pizza_ingredients.attach', [$pizza->id, $ingredientOlives->id]));
 
         // Assert that pizza has 2 ingredients
         $this->assertCount(2, $pizza->ingredients);
 
         // Delete olives from database(id: 2)
-        $this->delete('ingredients/' . $ingredientOlives->id);
+        $this->delete(route('ingredients.destroy', $ingredientOlives->id));
 
         // Assert that deletion was successful
         $this->assertCount(1, Pizza::first()->ingredients);

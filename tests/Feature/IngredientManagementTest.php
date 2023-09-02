@@ -14,7 +14,7 @@ class IngredientManagementTest extends TestCase
     /** @test */
     public function can_add_new_ingredient_to_database(): void
     {
-        $response = $this->post('ingredients/', [
+        $response = $this->post(route('ingredients.store'), [
             'name' => 'Salt',
             'price' => 1.99
         ]);
@@ -28,7 +28,7 @@ class IngredientManagementTest extends TestCase
     /** @test */
     public function cannot_add_new_ingredient_without_name_to_database(): void
     {
-        $response = $this->post('/ingredients', [
+        $response = $this->post(route('ingredients.store'), [
             'name' => ''
         ]);
 
@@ -38,7 +38,7 @@ class IngredientManagementTest extends TestCase
     /** @test */
     public function cannot_add_new_ingredient_without_price_to_database(): void
     {
-        $response = $this->post('/ingredients', [
+        $response = $this->post(route('ingredients.store'), [
             'price' => ''
         ]);
 
@@ -48,14 +48,14 @@ class IngredientManagementTest extends TestCase
     /** @test */
     public function can_delete_ingredient_from_database(): void
     {
-        $this->post('/ingredients', [
+        $this->post(route('ingredients.store'), [
             'name' => 'Salt',
             'price' => 1.99
         ]);
 
         $ingredient = Ingredient::first();
 
-        $response = $this->delete('/ingredients/' . $ingredient->id);
+        $response = $this->delete(route('ingredients.destroy', $ingredient->id));
         $response->assertOk();
         $this->assertCount(0, Ingredient::all());
     }

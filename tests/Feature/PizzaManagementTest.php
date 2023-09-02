@@ -15,7 +15,7 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function can_add_new_pizza_to_database(): void
     {
-        $response = $this->post('/pizzas', [
+        $response = $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
 
@@ -27,7 +27,7 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function cannot_add_new_pizza_without_name_to_database(): void
     {
-        $response = $this->post('/pizzas', [
+        $response = $this->post(route('pizzas.store'), [
             'name' => ''
         ]);
 
@@ -37,10 +37,10 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function cannot_add_pizza_with_already_used_name(): void
     {
-        $this->post('/pizzas', [
+        $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
-        $response = $this->post('/pizzas', [
+        $response = $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
 
@@ -51,13 +51,13 @@ class PizzaManagementTest extends TestCase
     /** @test */
     public function can_delete_pizza_from_database(): void
     {
-        $this->post('/pizzas', [
+        $this->post(route('pizzas.store'), [
             'name' => 'Hawaiian'
         ]);
 
         $pizza = Pizza::first();
 
-        $response = $this->delete('/pizzas/' . $pizza->id);
+        $response = $this->delete(route('pizzas.destroy', $pizza->id));
         $response->assertOk();
         $this->assertCount(0, Pizza::all());
     }

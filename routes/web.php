@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/pizzas', [PizzaController::class, 'store']);
-Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy']);
+Route::post('/pizzas', [PizzaController::class, 'store'])->name('pizzas.store');
+Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy'])->name('pizzas.destroy');
 
-Route::post('/ingredients', [IngredientController::class, 'store']);
-Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy']);
+Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
+Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
 
 
-Route::post('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach']);
-Route::delete('/pizza_ingredient/{pizza}/{ingredient}', [PizzaIngredientController::class, 'detach']);
+Route::post('/pizza_ingredients/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach'])->name('pizza_ingredients.attach');
+Route::delete('/pizza_ingredients/{pizza}/{ingredient}', [PizzaIngredientController::class, 'detach'])->name('pizza_ingredients.detach');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
