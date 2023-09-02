@@ -23,4 +23,18 @@ class UserManagementTest extends TestCase
         $response->assertRedirect('/home');
         $this->assertCount(1, User::all());
     }
+
+    /** @test */
+    public function is_user_default_role_number_is_zero(): void
+    {
+        $this->withoutExceptionHandling();
+        $this->post('register/', [
+            'name' => 'testUsername',
+            'email' => 'test@gmail.com',
+            'password' => 'test1234abcd',
+            'password_confirmation' => 'test1234abcd'
+        ]);
+
+        $this->assertEquals(0, User::first()->role_number);
+    }
 }
