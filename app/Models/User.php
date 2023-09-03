@@ -43,4 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+}
+enum Roles: int
+{
+    case CUSTOMER = 0;
+    case CHEF = 1;
 }
