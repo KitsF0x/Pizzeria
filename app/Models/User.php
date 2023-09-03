@@ -45,8 +45,3 @@ class User extends Authenticatable
     ];
 
 }
-enum Roles: int
-{
-    case CUSTOMER = 0;
-    case CHEF = 1;
-}

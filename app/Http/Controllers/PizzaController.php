@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pizza;
-use App\Models\Roles;
+use App\Enum\Roles;
 use Auth;
 use Illuminate\Http\Request;
 
