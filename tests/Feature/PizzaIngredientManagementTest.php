@@ -115,4 +115,14 @@ class PizzaIngredientManagementTest extends TestCase
         // Assert that removed correct model
         $this->assertEquals('Salt', $pizza->ingredients->first()->name);
     }
+
+    /** @test */
+    public function user_without_chef_role_cannot_manage_pizzas_ingredients(): void
+    {
+        $this->seed(PizzasSeeder::class);
+        $this->seed(IngredientsSeeder::class);
+        $response = $this->post(route('pizza_ingredients.attach', [Pizza::first()->id, Ingredient::first()->id]));
+
+        $response->assertUnauthorized();
+    }
 }
