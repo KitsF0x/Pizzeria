@@ -86,7 +86,11 @@ class PizzaManagementTest extends TestCase
         $response = $this->post(route('pizzas.store', [
             'name' => 'Hawaiian'
         ]));
-
+        $response = $this->delete(route('pizzas.destroy', [
+            Pizza::create([
+                'name' => 'Hawaiian'
+            ])
+        ]));
         $response->assertUnauthorized();
     }
 }

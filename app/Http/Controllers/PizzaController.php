@@ -29,6 +29,9 @@ class PizzaController extends Controller
         if (Auth::guest()) {
             return response("Unauthorized", 401);
         }
+        if (Auth::user()->role_number != Roles::CHEF) {
+            return response("Unauthorized", 401);
+        }
         $pizza->delete();
     }
 }
