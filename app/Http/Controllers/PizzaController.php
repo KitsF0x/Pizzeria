@@ -11,13 +11,6 @@ class PizzaController extends Controller
 {
     public function store(Request $request)
     {
-        if (Auth::guest()) {
-            return response("Unauthorized", 401);
-        }
-        if (Auth::user()->role_number != Roles::CHEF) {
-            return response("Unauthorized", 401);
-        }
-
         $validatedData = $request->validate([
             'name' => 'required|unique:App\Models\Pizza,name'
         ]);
@@ -26,12 +19,6 @@ class PizzaController extends Controller
 
     public function destroy(Request $request, Pizza $pizza)
     {
-        if (Auth::guest()) {
-            return response("Unauthorized", 401);
-        }
-        if (Auth::user()->role_number != Roles::CHEF) {
-            return response("Unauthorized", 401);
-        }
         $pizza->delete();
     }
 }

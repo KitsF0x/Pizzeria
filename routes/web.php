@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\Roles;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzaIngredientController;
@@ -15,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware('CheckUserRole:' . Roles::CHEF)->group(function () {
+    Route::post('/pizzas', [PizzaController::class, 'store'])->name('pizzas.store');
+    Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy'])->name('pizzas.destroy');
+});
 
-Route::post('/pizzas', [PizzaController::class, 'store'])->name('pizzas.store');
-Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy'])->name('pizzas.destroy');
 
 Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
 Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');

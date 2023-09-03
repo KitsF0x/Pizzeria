@@ -2,10 +2,10 @@
 
 namespace App\Enum;
 
-enum Roles: int
+class Roles
 {
-    case CUSTOMER = 0;
-    case CHEF = 1;
+    const CUSTOMER = 0;
+    const CHEF = 1;
 }
 
 ?>
