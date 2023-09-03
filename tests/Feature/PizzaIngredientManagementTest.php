@@ -86,6 +86,7 @@ class PizzaIngredientManagementTest extends TestCase
     public function can_delete_records_with_id_of_deleted_ingredient(): void
     {
         // Seed database 
+        $this->seed(ChefSeeder::class);
         $this->seed(IngredientsSeeder::class);
         $this->seed(PizzasSeeder::class);
 

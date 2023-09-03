@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('CheckUserRole:' . Roles::CHEF)->group(function () {
     Route::post('/pizzas', [PizzaController::class, 'store'])->name('pizzas.store');
     Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy'])->name('pizzas.destroy');
+
+    Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
+    Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
 });
 
-
-Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
-Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
 
 
 Route::post('/pizza_ingredients/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach'])->name('pizza_ingredients.attach');
