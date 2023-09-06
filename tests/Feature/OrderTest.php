@@ -28,4 +28,16 @@ class OrderTest extends TestCase
         $response->assertOk();
         $this->assertCount(1, Order::all());
     }
+
+    /** @test */
+    public function guest_cannot_order_pizza(): void
+    {
+        $this->seed(PizzasSeeder::class);
+        $response = $this->post(route('order.store'), [
+            "user_id" => User::first(),
+            "pizza_id" => Pizza::first(),
+        ]);
+
+        $response->assertUnauthorized();
+    }
 }
