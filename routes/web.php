@@ -2,6 +2,7 @@
 
 use App\Enum\Roles;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzaIngredientController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::middleware('CheckUserRole:' . Roles::CHEF)->group(function () {
     Route::post('/pizza_ingredients/{pizza}/{ingredient}', [PizzaIngredientController::class, 'attach'])->name('pizza_ingredients.attach');
     Route::delete('/pizza_ingredients/{pizza}/{ingredient}', [PizzaIngredientController::class, 'detach'])->name('pizza_ingredients.detach');
 });
+
+Route::middleware('CheckUserRole:' . Roles::CUSTOMER)->group(function () {
+    Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
+});
+
 
 Auth::routes();
 
