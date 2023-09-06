@@ -28,9 +28,11 @@ Route::middleware('CheckUserRole:' . Roles::CHEF)->group(function () {
     Route::delete('/pizza_ingredients/{pizza}/{ingredient}', [PizzaIngredientController::class, 'detach'])->name('pizza_ingredients.detach');
 });
 
-Route::middleware('CheckUserRole:' . Roles::CUSTOMER)->group(function () {
+Route::middleware('CheckUserRole:' . Roles::CUSTOMER . ',' . Roles::ORDER_MANAGER)->group(function () {
     Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
+    Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
 });
+
 
 
 Auth::routes();

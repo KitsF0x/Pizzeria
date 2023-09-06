@@ -11,4 +11,9 @@ class OrderController extends Controller
     {
         Order::create($request->all());
     }
+
+    public function destroy(Request $request, Order $order)
+    {
+        $order->delete();
+    }
 }
