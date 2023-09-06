@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Order;
 use App\Models\Pizza;
 use App\Models\User;
+use Auth;
 use Database\Seeders\CustomerSeeder;
 use Database\Seeders\PizzasSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,5 +40,27 @@ class OrderTest extends TestCase
         ]);
 
         $response->assertUnauthorized();
+    }
+
+    /** @test */
+    public function customer_cannot_destroy_others_orders(): void
+    {
+        // id 1
+        $this->seed(CustomerSeeder::class);
+
+        Order::create([
+            /* Some big number other than 1 */
+            'user_id' => 113,
+            /* Some pizza's id*/
+            'pizza_id' => 1
+        ]);
+        $this->assertCount(1, Order::all());
+
+        // Log in customer with id 1
+        Auth::login(User::first());
+
+        $response = $this->delete(route('order.destroy', Order::first()));
+        $response->assertUnauthorized();
+        $this->assertCount(1, Order::all());
     }
 }
